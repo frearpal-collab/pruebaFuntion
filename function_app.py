@@ -1,7 +1,5 @@
 import azure.functions as func
 import logging
-#import httpx
-#import requests
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
@@ -59,19 +57,5 @@ def ejecutar(req: func.HttpRequest) -> func.HttpResponse:
         logging.error(f"Error en la petición: {e}")
         return func.HttpResponse(
             f"⚠️ Ocurrió un error al enviar el POST: {str(e)}",
-            status_code=500
-        )
-@app.route(route="http_freddy")
-def http_trigger(req: func.HttpRequest) -> func.HttpResponse:
-    try:
-        r = httpx.get("https://api.github.com")
-        return func.HttpResponse(
-            f"Llamada exitosa, código: {r.status_code}",
-            status_code=200
-        )
-    except Exception as e:
-        logging.error(f"Error: {e}")
-        return func.HttpResponse(
-            "Error al procesar la solicitud.",
             status_code=500
         )
